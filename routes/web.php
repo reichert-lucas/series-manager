@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Series\EpisodiosController;
 use App\Http\Controllers\Series\SeriesController;
 use App\Http\Controllers\Series\TemporadasController;
 use Illuminate\Support\Facades\Route;
@@ -28,5 +29,7 @@ Route::group([
     Route::delete('destroy/{serie}', [SeriesController::class, 'destroy'])->name('series.destroy');
     Route::get('{serie}/temporadas', [TemporadasController::class, 'index'])->name('series.temporadas.index');
     Route::post('{serie}/updateName', [SeriesController::class, 'updateName'])->name('series.update.name');
+    Route::get('temporadas/{temporada}/episodios', [EpisodiosController::class, 'index'])->name('series.temporadas.episodios.index');
+    Route::post('temporadas/{temporada}/episodios/assistir', [EpisodiosController::class, 'watch'])->name('series.temporadas.episodios.watch');
 });
 

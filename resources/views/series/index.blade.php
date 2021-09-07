@@ -6,12 +6,8 @@
 
 @section('content')
 
-    @if ($message)
-        <div class="alert alert-success">
-            {{$message}}
-        </div>
-    @endif
-    
+    @include('includes.messages', ['message' => $message])    
+
     <a href="{{route('series.create')}}" class="btn btn-dark mb-1">
         <i class="bi bi-plus"></i>
         Adicionar
