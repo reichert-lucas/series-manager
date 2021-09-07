@@ -27,5 +27,6 @@ Route::group([
     Route::put('edit/{serie}', [SeriesController::class, 'update'])->name('series.update');
     Route::delete('destroy/{serie}', [SeriesController::class, 'destroy'])->name('series.destroy');
     Route::get('{serie}/temporadas', [TemporadasController::class, 'index'])->name('series.temporadas.index');
+    Route::post('{serie}/updateName', [SeriesController::class, 'updateName'])->name('series.update.name');
 });
 
