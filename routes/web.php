@@ -3,6 +3,7 @@
 use App\Http\Controllers\Series\EpisodiosController;
 use App\Http\Controllers\Series\SeriesController;
 use App\Http\Controllers\Series\TemporadasController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,6 @@ Route::group([
 });
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
