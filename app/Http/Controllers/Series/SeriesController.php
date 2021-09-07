@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Series;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Series\StoreRequest;
+use App\Models\Episodio;
 use App\Models\Serie;
+use App\Models\Temporada;
 use App\Services\SeriesCreator;
+use App\Services\SeriesRemover;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
@@ -29,7 +32,6 @@ class SeriesController extends Controller
 
     public function store(StoreRequest $request, SeriesCreator $seriesCreator)
     {
-        
         $serie = $seriesCreator->createSerie(
             $request->name, 
             $request->qtd_temporadas, 
@@ -38,10 +40,10 @@ class SeriesController extends Controller
 
         $request->session()->flash( // message só vai aparecer uma vez
             'message',
-            "Série '{$serie->name}' e suas temporadas foram CRIADAS com Sucesso"
+            "Série {$serie->name} e suas temporadas foram CRIADAS com Sucesso"
         );
+
         return redirect()->route('series.index');
-        //return redirect()->route('series.index')->with(['messsage' => 'Série criada com Sucesso']);
     }
 
     public function edit(Serie $serie)
@@ -54,16 +56,16 @@ class SeriesController extends Controller
         return view('series.edit');
     }
 
-    public function destroy(Serie $serie, Request $request)
+    public function destroy(Serie $serie, Request $request, SeriesRemover $seriesRemover)
     {
 
-        $serie->delete();
-
+        $serieName = $seriesRemover->removeSerie($serie);
+        
         $request->session()->flash( // message só vai aparecer uma vez
             'message',
-            'Série DELETADA com Sucesso'
+            "Série {$serieName} DELETADA com Sucesso"
         );
-
+        
         return redirect()->route('series.index');
     }
 }
