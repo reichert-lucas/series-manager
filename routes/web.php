@@ -33,3 +33,7 @@ Route::group([
     Route::post('temporadas/{temporada}/episodios/assistir', [EpisodiosController::class, 'watch'])->name('series.temporadas.episodios.watch');
 });
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
