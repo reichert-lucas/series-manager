@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Series;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Series\StoreRequest;
 use App\Models\Serie;
+use App\Services\SeriesCreator;
 use Illuminate\Http\Request;
 
 class SeriesController extends Controller
@@ -26,14 +27,18 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, SeriesCreator $seriesCreator)
     {
         
-        $serie = Serie::create($request->all());
+        $serie = $seriesCreator->createSerie(
+            $request->name, 
+            $request->qtd_temporadas, 
+            $request->ep_por_temporada
+        );
 
         $request->session()->flash( // message só vai aparecer uma vez
             'message',
-            'Série CRIADA com Sucesso'
+            "Série '{$serie->name}' e suas temporadas foram CRIADAS com Sucesso"
         );
         return redirect()->route('series.index');
         //return redirect()->route('series.index')->with(['messsage' => 'Série criada com Sucesso']);

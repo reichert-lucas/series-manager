@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('title')
-    Index
+    Séries - Index
 @endsection
 
 @section('content')
@@ -23,7 +23,10 @@
 
                 <div class="d-flex justify-content-between align-items-center">
                     {{$serie->name}}
-                    <div>
+                    <div class="d-flex">
+                        <a href="{{ route('series.temporadas.index', ['serie' => $serie->id]) }}" class="btn btn-sm btn-primary me-1">
+                            <i class="bi bi-box-arrow-up-right"></i>
+                        </a>
                         <form action="{{route('series.destroy', ['serie' => $serie->id])}}" method="post" onsubmit="return confirm('Tem Certeza que deseja remover {{ addslashes($serie->name)}}?')">
                             @csrf
                             @method('delete')

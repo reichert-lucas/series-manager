@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="h-100 p-5 text-white bg-dark rounded-3 mb-2 mt-1">
-            <h2>Séries - @yield('title')</h2>
+            <h2>@yield('title')</h2>
         </div>
 
         @yield('content')

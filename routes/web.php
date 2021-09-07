@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Series\SeriesController;
+use App\Http\Controllers\Series\TemporadasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {return redirect()->route('series.index');});
+
 Route::group([
     'prefix' => 'series'
 ], function () {
@@ -23,5 +26,6 @@ Route::group([
     Route::get('edit/{serie}', [SeriesController::class, 'edit'])->name('series.edit');
     Route::put('edit/{serie}', [SeriesController::class, 'update'])->name('series.update');
     Route::delete('destroy/{serie}', [SeriesController::class, 'destroy'])->name('series.destroy');
+    Route::get('{serie}/temporadas', [TemporadasController::class, 'index'])->name('series.temporadas.index');
 });
 
