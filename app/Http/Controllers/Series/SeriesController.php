@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Series;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Series\StoreRequest;
+use App\Mail\NovaSerie;
 use App\Models\Episodio;
 use App\Models\Serie;
 use App\Models\Temporada;
+use App\Models\User;
 use App\Services\SeriesCreator;
 use App\Services\SeriesRemover;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class SeriesController extends Controller
 {    
@@ -37,6 +41,28 @@ class SeriesController extends Controller
             $request->qtd_temporadas, 
             $request->ep_por_temporada
         );
+
+        foreach (User::all() as $index => $user) { // enviar email para todos os usuários do sistema
+
+            $timeToWait = $index + 1;
+
+            $email = new NovaSerie(
+                $request->name, 
+                $request->qtd_temporadas, 
+                $request->ep_por_temporada
+            );
+        
+            $email->subject('Nova Série Adicionada');
+        
+            $when = now()->addSecond($timeToWait * 10);
+
+            Mail::to($user)->later(
+                $when,
+                $email
+            );
+
+            //sleep(5); // espera um tempo para não ser bloquado por fazer muitas requisições
+        }
 
         $request->session()->flash( // message só vai aparecer uma vez
             'message',

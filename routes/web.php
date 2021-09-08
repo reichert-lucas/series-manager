@@ -5,6 +5,7 @@ use App\Http\Controllers\EntrarController;
 use App\Http\Controllers\Series\EpisodiosController;
 use App\Http\Controllers\Series\SeriesController;
 use App\Http\Controllers\Series\TemporadasController;
+use App\Mail\NovaSerie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -55,3 +56,31 @@ Route::post('registrar', [RegisterController::class, 'store'])->name('registrar.
 Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('visualizando-email', function () {
+    return new NovaSerie(
+        'Flash',
+        5,
+        10
+    );
+});
+
+Route::get('enviar-email', function () {
+    $email = new NovaSerie(
+        'Flash',
+        5,
+        10
+    );
+
+    $email->subject('Nova Série Adicionada');
+
+    $user = (object) [
+        'email' => 'lucas.reichert@redes.ufsm.br',
+        'name' => 'Lucas Coelho Reichert'
+    ];
+
+    Illuminate\Support\Facades\Mail::to($user)->send($email);
+    return 'E-mail enviado';
+
+});
