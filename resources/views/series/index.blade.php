@@ -8,10 +8,13 @@
 
     @include('includes.messages', ['message' => $message])    
 
-    <a href="{{route('series.create')}}" class="btn btn-dark mb-1">
-        <i class="bi bi-plus"></i>
-        Adicionar
-    </a>
+    @auth
+        <a href="{{route('series.create')}}" class="btn btn-dark mb-1">
+            <i class="bi bi-plus"></i>
+            Adicionar
+        </a>
+    @endauth
+    
 
     <ul class="list-group">
         @foreach($series as $serie)
@@ -27,16 +30,20 @@
                 </div>
 
                 <span class="d-flex">
-                    <button class="btn btn-sm btn-primary me-1 bi bi-pencil-square" onclick="toggleInput({{ $serie->id }})"></button>
+                    @auth
+                        <button class="btn btn-sm btn-primary me-1 bi bi-pencil-square" onclick="toggleInput({{ $serie->id }})"></button>
+                    @endauth
                     <a href="{{ route('series.temporadas.index', ['serie' => $serie->id]) }}" class="btn btn-sm btn-primary me-1">
                         <i class="bi bi-box-arrow-up-right"></i>
                     </a>
-                    <form method="post" action="{{route('series.destroy', ['serie' => $serie->id])}}"
-                        onsubmit="return confirm('Tem certeza que deseja remover {{ addslashes($serie->name) }}?')">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger bi bi-trash"></button>
-                    </form>
+                    @auth
+                        <form method="post" action="{{route('series.destroy', ['serie' => $serie->id])}}"
+                            onsubmit="return confirm('Tem certeza que deseja remover {{ addslashes($serie->name) }}?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger bi bi-trash"></button>
+                        </form>
+                    @endauth
                 </span>
             </li>
         @endforeach

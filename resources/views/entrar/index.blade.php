@@ -8,7 +8,7 @@
 
     @include('includes.errors', ['errors' => $errors])
 
-    <form method="post">
+    <form method="post" class="container-md">
         @csrf
         <div class="mb-3 mt-3">
             <label for="email">E-mail</label>

@@ -9,11 +9,6 @@ use Illuminate\Http\Request;
 class TemporadasController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     public function index(Serie $serie)
     {
         $temporadas = $serie->temporadas()->get();
