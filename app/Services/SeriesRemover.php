@@ -8,8 +8,10 @@ use App\Models\Temporada;
 use Illuminate\Support\Facades\DB;
 
 class SeriesRemover {
-    public function removeSerie(Serie $serie): string
+    public function removeSerie($serie): string
     {
+        $serie = Serie::find($serie);
+        
         DB::transaction(function () use ($serie){ // colocando a query em uma transaction, assim se ocorrer algum erro em algumas das operações, tudo será voltado ao estado anterior
             $this->removeSerieSeasons($serie);
             $serie->delete();
@@ -18,7 +20,7 @@ class SeriesRemover {
         return $serie->name;
     }
 
-    private function removeSerieSeasons(Serie $serie)
+    private function removeSerieSeasons($serie)
     {
         $serie->temporadas()->each(function (Temporada $temporada) { 
             $this->removeSeasonEpisodes($temporada);
