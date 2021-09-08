@@ -16,7 +16,7 @@
     </div>
     @endif
 
-    <form action="{{route('series.store')}}" method="post" class="container mt-4">
+    <form action="{{route('series.store')}}" method="post" enctype="multipart/form-data" class="container mt-4">
         @csrf
 
         <div class="mb-3">
@@ -34,9 +34,11 @@
                     <input type="number" name="ep_por_temporada" class="form-control">
                 </div>
 
-            </div>    
-            
-        
+            </div>   
+            <div class="row mt-3">
+                <label class="form-label" for="capa">Capa</label>
+                <input type="file" name="capa">
+            </div>            
         </div>
 
         <button type="submit" class="btn btn-primary">Criar</button>

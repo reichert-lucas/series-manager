@@ -7,13 +7,16 @@ use App\Models\Temporada;
 use Illuminate\Support\Facades\DB;
 
 class SeriesCreator {
-    public function createSerie($name, $qtdTemporadas, $epPorTemporada)
+    public function createSerie($name, $qtdTemporadas, $epPorTemporada, $capa = null)
     {
 
         $serie = null;
 
         DB::beginTransaction(); // é o mesmo que usar o método transaction que foi usado no SeriesRemover, porém assim não precisar referenciar todos os dados para dentro da função
-            $serie = Serie::create(['name' => $name]);
+            $serie = Serie::create([
+                'name' => $name,
+                'capa' => $capa
+            ]);
             $this->createSeasons($serie, $qtdTemporadas, $epPorTemporada);
         DB::commit();
         

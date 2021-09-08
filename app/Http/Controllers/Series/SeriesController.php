@@ -37,10 +37,18 @@ class SeriesController extends Controller
 
     public function store(StoreRequest $request, SeriesCreator $seriesCreator)
     {
+
+
+        $capa = null;
+        if ($request->hasFile('capa')) {
+            $capa = $request->file('capa')->store('serie');
+        }
+
         $serie = $seriesCreator->createSerie(
             $request->name, 
             $request->qtd_temporadas, 
-            $request->ep_por_temporada
+            $request->ep_por_temporada,
+            $capa
         );
 
         /* Criando um evento para quando a série for criada */
