@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\EntrarController;
 use App\Http\Controllers\Series\EpisodiosController;
 use App\Http\Controllers\Series\SeriesController;
 use App\Http\Controllers\Series\TemporadasController;
@@ -34,6 +36,11 @@ Route::group([
     Route::post('temporadas/{temporada}/episodios/assistir', [EpisodiosController::class, 'watch'])->name('series.temporadas.episodios.watch');
 });
 
+Route::get('entrar', [EntrarController::class, 'index'])->name('entrar.index');
+Route::post('entrar', [EntrarController::class, 'entrar'])->name('entrar.entrar');
+
+Route::get('registrar', [RegisterController::class, 'create'])->name('registrar.create');
+Route::post('registrar', [RegisterController::class, 'store'])->name('registrar.store');
 
 Auth::routes(['register' => false]);
 

@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 
 class EpisodiosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(Temporada $temporada, Request $request)
     {
         $episodios = $temporada->episodios()->get();
