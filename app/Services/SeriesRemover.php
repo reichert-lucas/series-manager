@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\SerieApagada;
 use App\Models\Episodio;
 use App\Models\Serie;
 use App\Models\Temporada;
@@ -15,11 +16,13 @@ class SeriesRemover {
         
         DB::transaction(function () use ($serie){ // colocando a query em uma transaction, assim se ocorrer algum erro em algumas das operações, tudo será voltado ao estado anterior
             $this->removeSerieSeasons($serie);
-            $serie->delete();
 
-            if ($serie->capa) {
-                Storage::delete($serie->capa);
-            }
+            $serieArray = (object) $serie->toArray();
+
+            $event = new SerieApagada($serieArray);
+            event($event);
+
+            $serie->delete();
         });
 
         return $serie->name;
