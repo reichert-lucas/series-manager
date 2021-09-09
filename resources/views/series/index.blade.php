@@ -19,13 +19,16 @@
     <ul class="list-group">
         @foreach($series as $serie)
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span id="nome-serie-{{ $serie->id }}">{{ $serie->name }}</span>
 
-                <div class="input-group w-50" hidden id="input-nome-serie-{{ $serie->id }}">
-                    <input type="text" class="form-control" value="{{ $serie->name }}">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary bi bi-check2-circle" onclick="editarSerie({{ $serie->id }})"></button>
-                        @csrf
+                <div class="d-flex justify-content-start align-items-center w-100">
+                    <img src="{{$serie->capa_url}}" alt="Imagem da Série" class="img-thumbnail me-3" height="75px" width="75px">
+                    <span id="nome-serie-{{ $serie->id }}"><b>{{ $serie->name }}</b></span>
+                    <div class="input-group w-75" hidden id="input-nome-serie-{{ $serie->id }}">
+                        <input type="text" class="form-control" value="{{ $serie->name }}">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary bi bi-check2-circle" onclick="editarSerie({{ $serie->id }})"></button>
+                            @csrf
+                        </div>
                     </div>
                 </div>
 
